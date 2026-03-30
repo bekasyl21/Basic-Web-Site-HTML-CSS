@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Мәзір — LA Пончик</title>
+<link rel="stylesheet" href="style.css">
+<style>
+/* ── MENU PAGE SPECIFIC ── */
+.menu-intro {
+  padding: 10rem 3rem 0;
+  background: var(--white);
+}
+.menu-intro-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 5rem; align-items: end;
+  padding-bottom: 4rem;
+  border-bottom: 2px solid var(--border);
+}
+.menu-intro-left h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3.5rem, 8vw, 7rem);
+  font-weight: 900; line-height: .9; color: var(--brown);
+  margin-bottom: 1.5rem;
+}
+.menu-intro-left h1 em { color: var(--pink); font-style: italic; display: block; }
+.menu-intro-right p {
+  font-size: 1rem; line-height: 1.9;
+  color: var(--gray); font-style: italic;
+  border-left: 3px solid var(--pink);
+  padding-left: 1.5rem;
+}
+
+/* ── HERO PHOTO ROW ── */
+.menu-hero-photos {
+  display: grid; grid-template-columns: 2fr 1fr 1fr;
+  height: 50vh; gap: 2px;
+  border-bottom: 2px solid var(--brown);
+}
+.menu-hero-photos img {
+  width: 100%; height: 100%; object-fit: cover;
+  filter: saturate(.88);
+  transition: filter .4s;
+}
+.menu-hero-photos img:hover { filter: saturate(1.1); }
+
+/* ── FILTER TABS ── */
+.filter-bar {
+  background: var(--cream); padding: 1.5rem 3rem;
+  border-bottom: 2px solid var(--border);
+  display: flex; gap: .5rem; flex-wrap: wrap;
+  position: sticky; top: 64px; z-index: 100;
+}
+.filter-btn {
+  font-family: 'Unbounded', sans-serif;
+  font-size: .58rem; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; padding: .6rem 1.4rem;
+  border: 1.5px solid var(--brown); background: transparent;
+  color: var(--brown); cursor: none;
+  transition: all .25s;
+}
+.filter-btn:hover, .filter-btn.active {
+  background: var(--brown); color: var(--white);
+}
+.filter-btn.pink.active { background: var(--pink); border-color: var(--pink); color: var(--white); }
+
+/* ── MENU MASONRY ── */
+.menu-grid-section { padding: 5rem 3rem; background: var(--white); }
+.menu-grid-inner { max-width: 1200px; margin: 0 auto; }
+
+.menu-section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem; font-weight: 900;
+  color: var(--brown); margin-bottom: 2.5rem;
+  padding-bottom: 1.2rem;
+  border-bottom: 2px solid var(--border);
+  display: flex; align-items: center; gap: 1.5rem;
+}
+.menu-section-title span {
+  font-family: 'Unbounded', sans-serif;
+  font-size: .6rem; letter-spacing: 3px;
+  color: var(--pink); font-weight: 700; text-transform: uppercase;
+}
+
+.menu-items { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-bottom: 5rem; }
+
+.menu-item {
+  background: var(--cream); position: relative;
+  overflow: hidden; border: 1px solid var(--border);
+  transition: box-shadow .3s;
+}
+.menu-item:hover { box-shadow: 0 12px 50px rgba(61,26,0,.1); }
+
+.menu-item-img {
+  width: 100%; aspect-ratio: 1/1; object-fit: cover;
+  display: block; transition: transform .5s ease;
+  filter: saturate(.9);
+}
+.menu-item:hover .menu-item-img { transform: scale(1.04); }
+
+.menu-item-body { padding: 1.6rem; }
+.menu-item-tag {
+  font-family: 'Unbounded', sans-serif;
+  font-size: .52rem; letter-spacing: 3px; font-weight: 700;
+  color: var(--pink); text-transform: uppercase; margin-bottom: .6rem;
+}
+.menu-item-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem; font-weight: 700;
+  color: var(--brown); margin-bottom: .5rem; line-height: 1.2;
+}
+.menu-item-desc { font-size: .85rem; line-height: 1.65; color: var(--gray); margin-bottom: 1.2rem; }
+
+.menu-item-footer { display: flex; justify-content: space-between; align-items: center; }
+.menu-item-price {
+  font-family: 'Unbounded', sans-serif;
+  font-size: 1.1rem; font-weight: 900; color: var(--brown);
+}
+.menu-item-badge {
+  font-family: 'Unbounded', sans-serif;
+  font-size: .5rem; letter-spacing: 2px; font-weight: 700;
+  text-transform: uppercase; padding: .35rem .8rem;
+  background: var(--pink); color: var(--white);
+}
+
+/* featured item — full width */
+.menu-item.featured {
+  grid-column: span 3;
+  display: grid; grid-template-columns: 1fr 1fr;
+}
+.menu-item.featured .menu-item-img { aspect-ratio: auto; height: 100%; }
+.menu-item.featured .menu-item-body {
+  padding: 3rem; display: flex; flex-direction: column; justify-content: center;
+}
+.menu-item.featured .menu-item-name { font-size: 2.2rem; }
+.menu-item.featured .menu-item-desc { font-size: .95rem; }
+
+/* ── COMBO BOX ── */
+.combo-section {
+  background: var(--brown); color: var(--white);
+  padding: 5rem 3rem;
+}
+.combo-inner { max-width: 1200px; margin: 0 auto; }
+.combo-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; }
+.combo-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 900; color: var(--white); line-height: 1;
+}
+.combo-title em { color: var(--gold-light); font-style: italic; }
+.combo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.combo-card {
+  border: 1px solid rgba(255,253,248,.12);
+  padding: 2rem; position: relative;
+}
+.combo-card-num {
+  font-family: 'Unbounded', sans-serif;
+  font-size: 3rem; font-weight: 900;
+  color: rgba(255,253,248,.06); position: absolute;
+  top: 1rem; right: 1.5rem; line-height: 1;
+}
+.combo-card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem; font-weight: 700; color: var(--white);
+  margin-bottom: .7rem;
+}
+.combo-card-items { font-size: .85rem; color: rgba(255,253,248,.55); line-height: 1.8; margin-bottom: 1.5rem; }
+.combo-price {
+  font-family: 'Unbounded', sans-serif;
+  font-size: 1.4rem; font-weight: 900; color: var(--gold-light);
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width: 900px) {
+  .menu-intro-inner { grid-template-columns: 1fr; gap: 2rem; }
+  .menu-hero-photos { grid-template-columns: 1fr 1fr; height: auto; }
+  .menu-hero-photos img:last-child { display: none; }
+  .menu-items { grid-template-columns: 1fr 1fr; }
+  .menu-item.featured { grid-column: span 2; grid-template-columns: 1fr; }
+  .combo-grid { grid-template-columns: 1fr; }
+  .menu-hero-photos { height: 40vw; }
+}
+@media(max-width: 600px) {
+  .menu-items { grid-template-columns: 1fr; }
+  .menu-item.featured { grid-column: span 1; grid-template-columns: 1fr; }
+  .filter-bar { padding: 1rem 1rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<nav class="nav">
+  <a class="nav-logo" href="index.html">LA <span>ПОНЧИК</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Басты бет</a></li>
+    <li><a href="menu.html" class="active">Мәзір</a></li>
+    <li><a href="about.html">Біз туралы</a></li>
+  </ul>
+  <a class="nav-cta" href="about.html">Тарих</a>
+</nav>
+
+<!-- INTRO -->
+<div class="menu-intro">
+  <div class="menu-intro-inner">
+    <div class="menu-intro-left">
+      <div class="section-eyebrow">Толық мәзір — 2026</div>
+      <h1>Біздің <em>таңдау</em></h1>
+    </div>
+    <div class="menu-intro-right">
+      <p>Әр пончик — жеке тарих. Қолдан пішіліп, алтын-сарыға дейін қуырылады, содан кейін глазурьмен безендіріледі. Калифорния күні мен пончик — мінсіз жұп.</p>
+    </div>
+  </div>
+</div>
+
+<!-- HERO PHOTOS -->
+<div class="menu-hero-photos">
+  <img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?w=900&q=85&auto=format&fit=crop" alt="Пончик жинағы">
+  <img src="https://images.unsplash.com/photo-1509365465985-25d11c17e812?w=500&q=85&auto=format&fit=crop" alt="Шоколад пончик">
+  <img src="https://images.unsplash.com/photo-1595515106969-1ce29566ff1c?w=500&q=85&auto=format&fit=crop" alt="Sprinkle пончик">
+</div>
+
+<!-- FILTER -->
+<div class="filter-bar">
+  <button class="filter-btn active">Барлығы</button>
+  <button class="filter-btn pink">Классика</button>
+  <button class="filter-btn">Арнайы</button>
+  <button class="filter-btn">Маусымдық</button>
+  <button class="filter-btn">Веган</button>
+</div>
+
+<!-- MENU GRID -->
+<section class="menu-grid-section">
+  <div class="menu-grid-inner">
+
+    <div class="menu-section-title">
+      Классикалық дәмдер <span>№ 01–06</span>
+    </div>
+
+    <div class="menu-items">
+
+      <!-- FEATURED -->
+      <div class="menu-item featured reveal">
+        <img class="menu-item-img"
+          src="https://images.unsplash.com/photo-1627308595229-7830a5c91f9f?w=900&q=85&auto=format&fit=crop"
+          alt="Классикалық глазурь">
+        <div class="menu-item-body">
+          <div class="menu-item-tag">Бестселлер · №01</div>
+          <div class="menu-item-name">Классикалық глазурь</div>
+          <div class="menu-item-desc">Лос-Анджелестің жүрегі осында. Жылы қамыр мен жіңішке ванильді глазурь — бұл комбинация 1952 жылдан бері өзгермеген. Бәрінің сүйіктісі, барлық уақытта.</div>
+          <div class="menu-item-footer">
+            <div class="menu-item-price">$1.25</div>
+            <div class="menu-item-badge">Легенда</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-item reveal">
+        <img class="menu-item-img"
+          src="https://images.unsplash.com/photo-1509365465985-25d11c17e812?w=600&q=85&auto=format&fit=crop"
+          alt="Шоколад пончик">
+        <div class="menu-item-body">
+          <div class="menu-item-tag">№02</div>
+          <div class="menu-item-name">Шоколад Old Fashioned</div>
+          <div class="menu-item-desc">Тығыз кейк-стайл, хрусты жылқы. Шоколадты глазурь мен жарықтар — дәл осылай керек.</div>
+          <div class="menu-item-footer">
+            <div class="menu-item-price">$1.75</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-item reveal">
+        <img class="menu-item-img"
+          src="https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=600&q=85&auto=format&fit=crop"
+          alt="Maple Bar">
+        <div class="menu-item-body">
+          <div class="menu-item-tag">№03 · LA Классик</div>
+          <div class="menu-item-name">Maple Bar</div>
+          <div class="menu-item-desc">Тіктөртбұрышты пончик, үстінен клен глазурі. Кейде беконмен. Осы форматты LA ойлап тапты.</div>
+          <div class="menu-item-footer">
+            <div class="menu-item-price">$2.00</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-item reveal">
+        <img class="menu-item-img"
+          src="https://images.unsplash.com/photo-1595515106969-1ce29566ff1c?w=600&q=85&auto=format&fit=crop"
+          alt="Rainbow Sprinkle">
+        <div class="menu-item-body">
+          <div class="menu-item-tag">№04 · Instagram ⭐</div>
+          <div class="menu-item-name">Rainbow Sprinkle</div>
+          <div class="menu-item-desc">Қызғылт клубника глазурі мен жарқын себезгі. Бұл тек пончик емес — бұл сурет.</div>
+          <div class="menu-item-footer">
+            <div class="menu-item-price">$1.50</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-item reveal">
+        <img class="menu-item-img"
+          src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=600&q=85&auto=format&fit=crop"
+          alt="Лимон крем">
+        <div class="menu-item-body">
+          <div class="menu-item-tag">№05 · Маусымдық</div>
+          <div class="menu-item-name">Лимон Кастард</div>
+          <div class="menu-item-desc">Ішінде нәзік лимон крем-заварной. Сыртынан ақ қант қабығы мен цедра.</div>
+          <div class="menu-item-footer">
+            <div class="menu-item-price">$2.25</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-item reveal">
+        <img class="menu-item-img"
+          src="https://images.unsplash.com/photo-1571115177098-24ec42ed204d?w=600&q=85&auto=format&fit=crop"
+          alt="Матча">
+        <div class="menu-item-body">
+          <div class="menu-item-tag">№06 · Жаңа тренд</div>
+          <div class="menu-item-name">Матча Дрим</div>
+          <div class="menu-item-desc">Жапон матчасы LA рухымен кездеседі. Ашқыл жасыл, ақ шоколадпен теңдестірілген.</div>
+          <div class="menu-item-footer">
+            <div class="menu-item-price">$2.75</div>
+            <div class="menu-item-badge">Жаңа</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- SECOND SECTION -->
+    <div class="menu-section-title">
+      Арнайы дәмдер <span>Шеф-аспаздан</span>
+    </div>
+
+    <div class="menu-items">
+      <div class="menu-item reveal">
+        <img class="menu-item-img"
+          src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=85&auto=format&fit=crop"
+          alt="Crème Brûlée">
+        <div class="menu-item-body">
+          <div class="menu-item-tag">Премиум</div>
+          <div class="menu-item-name">Крем-Брюле</div>
+          <div class="menu-item-desc">Пончик үстіндегі карамель — тіл жалайсың. Газ горелкамен тікелей алдыңда жасалады.</div>
+          <div class="menu-item-footer">
+            <div class="menu-item-price">$3.50</div>
+            <div class="menu-item-badge">Хит</div>
+          </div>
+        </div>
+      </div>
+      <div class="menu-item reveal">
+        <img class="menu-item-img"
+          src="https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?w=600&q=85&auto=format&fit=crop"
+          alt="Strawberry">
+        <div class="menu-item-body">
+          <div class="menu-item-tag">Маусымдық жеміс</div>
+          <div class="menu-item-name">Клубника Фреш</div>
+          <div class="menu-item-desc">Жаңа клубникамен толтырылған. Donut Man стиліндегі нәзік жеміс толтырмасы.</div>
+          <div class="menu-item-footer">
+            <div class="menu-item-price">$3.25</div>
+          </div>
+        </div>
+      </div>
+      <div class="menu-item reveal">
+        <img class="menu-item-img"
+          src="https://images.unsplash.com/photo-1551024601-bec78aea704b?w=600&q=85&auto=format&fit=crop"
+          alt="Веган пончик">
+        <div class="menu-item-body">
+          <div class="menu-item-tag">Веган · Глютенсіз</div>
+          <div class="menu-item-name">Лаванда Дрим</div>
+          <div class="menu-item-desc">Провансаль лаванда мен бал глазурі. Веган рецепт — сүт жоқ, жұмыртқа жоқ.</div>
+          <div class="menu-item-footer">
+            <div class="menu-item-price">$3.75</div>
+            <div class="menu-item-badge">Веган</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- COMBO -->
+<section class="combo-section">
+  <div class="combo-inner">
+    <div class="combo-header">
+      <div>
+        <div class="section-eyebrow" style="color:var(--gold-light)">Үнемді таңдау</div>
+        <h2 class="combo-title">Комбо <em>ұсыныстар</em></h2>
+      </div>
+    </div>
+    <div class="combo-grid">
+      <div class="combo-card reveal">
+        <div class="combo-card-num">01</div>
+        <div class="combo-card-title">Таңғы кешкі</div>
+        <div class="combo-card-items">2 классикалық глазурь<br>1 шоколад old fashioned<br>1 кесе кофе</div>
+        <div class="combo-price">$5.50</div>
+      </div>
+      <div class="combo-card reveal">
+        <div class="combo-card-num">02</div>
+        <div class="combo-card-title">LA Классик Дозен</div>
+        <div class="combo-card-items">6 глазурь · 3 шоколад<br>2 sprinkle · 1 maple bar<br>Қораппен</div>
+        <div class="combo-price">$14.99</div>
+      </div>
+      <div class="combo-card reveal">
+        <div class="combo-card-num">03</div>
+        <div class="combo-card-title">Премиум Сет</div>
+        <div class="combo-card-items">Крем-брюле · Матча дрим<br>Лаванда · Клубника фреш<br>Сыйлық қорабы</div>
+        <div class="combo-price">$13.00</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand-name">LA <span>ПОНЧИК</span></div>
+      <div class="footer-tagline">Ыстық. Глазурьланған. Ұмытылмас.<br>Лос-Анджелес, Калифорния — 1952 жылдан бері.</div>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Беттер</div>
+      <ul>
+        <li><a href="index.html">Басты бет</a></li>
+        <li><a href="menu.html">Мәзір</a></li>
+        <li><a href="about.html">Біз туралы</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Байланыс</div>
+      <ul>
+        <li><a href="#">Los Angeles, CA</a></li>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">+1 (310) 555-0192</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2026 LA Пончик · Барлық құқықтар қорғалған</div>
+    <div class="footer-copy">Лос-Анджелес · Калифорния · АҚШ</div>
+  </div>
+</footer>
+
+<script>
+const cursor = document.getElementById('cursor');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top = e.clientY + 'px';
+});
+document.querySelectorAll('a, button').forEach(el => {
+  el.addEventListener('mouseenter', () => cursor.classList.add('big'));
+  el.addEventListener('mouseleave', () => cursor.classList.remove('big'));
+});
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Filter buttons
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
